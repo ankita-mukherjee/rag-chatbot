@@ -19,7 +19,7 @@ class DefaultElement:
     DEFAULT_HISTORY: ClassVar[list] = []
     DEFAULT_DOCUMENT: ClassVar[list] = []
 
-    HELLO_MESSAGE: str = "Hi 👋, how can I help you today?"
+    HELLO_MESSAGE: str = "Hi 👋, Welcome to Fault Detector?"
     SET_MODEL_MESSAGE: str = "You need to choose LLM model 🤖 first!"
     EMPTY_MESSAGE: str = "You need to enter your message!"
     DEFAULT_STATUS: str = "Ready!"
@@ -352,9 +352,11 @@ class LocalChatbotUI:
                             )
                         with gr.Row(variant=self._variant):
                             ui_btn = gr.Button(
-                                value="Hide Setting"
-                                if sidebar_state.value
-                                else "Show Setting",
+                                value=(
+                                    "Hide Setting"
+                                    if sidebar_state.value
+                                    else "Show Setting"
+                                ),
                                 min_width=20,
                             )
                             undo_btn = gr.Button(value="Undo", min_width=20)
@@ -402,7 +404,9 @@ class LocalChatbotUI:
                 self._pull_model,
                 inputs=[model],
                 outputs=[message, chatbot, status, model],
-            ).then(self._change_model, inputs=[model], outputs=[status])
+            ).then(
+                self._change_model, inputs=[model], outputs=[status]
+            )
             message.submit(
                 self._upload_document, inputs=[documents, message], outputs=[documents]
             ).then(
